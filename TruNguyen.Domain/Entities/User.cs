@@ -15,7 +15,14 @@ namespace TruNguyen.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public bool IsLocked { get; set; } = false;
 
+        public UserRole Role { get; set; } = UserRole.User;
+    }
 
-        // Additional properties (roles, claims) as needed
+
+    public enum UserRole
+    {
+        Dev,
+        Admin,
+        User
     }
 }

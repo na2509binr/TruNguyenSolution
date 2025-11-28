@@ -21,7 +21,9 @@ namespace TruNguyen.Api.Controllers
         {
             try
             {
-                return Ok("success!");
+                var menus = await _menu.GetAll();
+                return Ok(menus);
+                //return Ok("success!");
             }
             catch (Exception ex)
             {

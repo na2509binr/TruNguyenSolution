@@ -17,6 +17,8 @@ namespace TruNguyen.Infrastructure
         public DbSet<NewsSection> NewsSections { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<Partner> Partners { get; set; } = null!;
+        public DbSet<SeoMeta> SeoMetas { get; set; } = null!;
+        public DbSet<ConfigSite> ConfigSites { get; set; } = null!;
         public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     }

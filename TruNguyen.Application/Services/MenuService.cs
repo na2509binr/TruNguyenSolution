@@ -26,13 +26,24 @@ namespace TruNguyen.Application.Services
         {
             try
             {
-                return _menuRepo.BuildTree(
-                    (await _menuRepo.GetAllAsync()).ToList(),
-                    null,
-                    m => m.ParentId,
-                    m => m.Id,
+                var menus = (await _menuRepo.GetAllAsync()).ToList();
+                var treeMenus = _menuRepo.BuildTree(
+                    menus,
+                    null, 
+                    m => m.ParentId, 
+                    m => m.Id, 
                     (m, children) => m.Children = children
                 );
+
+                return treeMenus;
+
+                //return _menuRepo.BuildTree(
+                //    (await _menuRepo.GetAllAsync()).ToList(),
+                //    null,
+                //    m => m.ParentId,
+                //    m => m.Id,
+                //    (m, children) => m.Children = children
+                //);
             }
             catch (Exception ex)
             {
