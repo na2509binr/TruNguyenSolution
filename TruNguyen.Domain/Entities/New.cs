@@ -28,7 +28,7 @@ namespace TruNguyen.Domain.Entities
 
 
         // 👇 Thêm navigation property
-        public ICollection<NewsSection> Sections { get; set; } = new List<NewsSection>();
+        //public ICollection<NewsSection> Sections { get; set; } = new List<NewsSection>();
 
 
 

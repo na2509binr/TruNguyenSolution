@@ -56,7 +56,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // domain của React app
+            policy.WithOrigins("http://localhost:3001", "http://localhost:3000") // domain của React app
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();

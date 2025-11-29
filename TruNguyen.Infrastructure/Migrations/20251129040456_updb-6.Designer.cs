@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TruNguyen.Infrastructure;
 
@@ -11,9 +12,11 @@ using TruNguyen.Infrastructure;
 namespace TruNguyen.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251129040456_updb-6")]
+    partial class updb6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,8 @@ namespace TruNguyen.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("CategoryProducts");
                 });
@@ -183,6 +188,9 @@ namespace TruNguyen.Infrastructure.Migrations
                     b.Property<int?>("CategoryNewsId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CategoryProductsId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -199,6 +207,10 @@ namespace TruNguyen.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryProductsId");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Menus");
                 });
@@ -341,6 +353,8 @@ namespace TruNguyen.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryProductId");
+
                     b.ToTable("Products");
                 });
 
@@ -466,15 +480,67 @@ namespace TruNguyen.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("TruNguyen.Domain.Entities.CategoryProduct", b =>
+                {
+                    b.HasOne("TruNguyen.Domain.Entities.CategoryProduct", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("TruNguyen.Domain.Entities.Menu", b =>
+                {
+                    b.HasOne("TruNguyen.Domain.Entities.CategoryProduct", "CategoryProducts")
+                        .WithMany()
+                        .HasForeignKey("CategoryProductsId");
+
+                    b.HasOne("TruNguyen.Domain.Entities.Menu", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("CategoryProducts");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("TruNguyen.Domain.Entities.NewsSection", b =>
                 {
                     b.HasOne("TruNguyen.Domain.Entities.New", "News")
-                        .WithMany()
+                        .WithMany("Sections")
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("News");
+                });
+
+            modelBuilder.Entity("TruNguyen.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("TruNguyen.Domain.Entities.CategoryProduct", "CategoryProducts")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryProducts");
+                });
+
+            modelBuilder.Entity("TruNguyen.Domain.Entities.CategoryProduct", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("TruNguyen.Domain.Entities.Menu", b =>
+                {
+                    b.Navigation("Children");
+                });
+
+            modelBuilder.Entity("TruNguyen.Domain.Entities.New", b =>
+                {
+                    b.Navigation("Sections");
                 });
 #pragma warning restore 612, 618
         }

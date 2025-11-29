@@ -27,15 +27,20 @@ namespace TruNguyen.Application.Services
             try
             {
                 var menus = (await _menuRepo.GetAllAsync()).ToList();
-                var treeMenus = _menuRepo.BuildTree(
-                    menus,
-                    null, 
-                    m => m.ParentId, 
-                    m => m.Id, 
-                    (m, children) => m.Children = children
-                );
 
-                return treeMenus;
+                return menus;
+
+
+                //var menus = (await _menuRepo.GetAllAsync()).ToList();
+                //var treeMenus = _menuRepo.BuildTree(
+                //    menus,
+                //    null, 
+                //    m => m.ParentId, 
+                //    m => m.Id, 
+                //    (m, children) => m.Children = children
+                //);
+
+                //return treeMenus;
 
                 //return _menuRepo.BuildTree(
                 //    (await _menuRepo.GetAllAsync()).ToList(),

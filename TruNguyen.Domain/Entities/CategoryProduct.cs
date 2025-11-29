@@ -23,12 +23,12 @@ namespace TruNguyen.Domain.Entities
 
 
 
-        // Đệ quy
-        public CategoryProduct? Parent { get; set; }
-        public ICollection<CategoryProduct>? Children { get; set; }
+        //// Đệ quy
+        //public CategoryProduct? Parent { get; set; }
+        //public ICollection<CategoryProduct>? Children { get; set; }
 
-        // Liên kết sản phẩm
-        public ICollection<Product>? Products { get; set; }
+        //// Liên kết sản phẩm
+        //public ICollection<Product>? Products { get; set; }
 
 
 

@@ -23,7 +23,7 @@ namespace TruNguyen.Application.Services
         }
 
 
-        public async Task<List<User>> GetAllUser(User user)
+        public async Task<List<User>> GetAll()
         {
             try
             {
@@ -38,7 +38,7 @@ namespace TruNguyen.Application.Services
             }
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetById(Guid id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace TruNguyen.Application.Services
             }
         }
 
-        public async Task<bool> InsertUser(User user)
+        public async Task<bool> Insert(User user)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace TruNguyen.Application.Services
             }
         }
 
-        public async Task<bool> UpdateUser(User user)
+        public async Task<bool> Update(User user)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace TruNguyen.Application.Services
             }
         }
 
-        public async Task<bool> DeleteUser(User user)
+        public async Task<bool> Delete(User user)
         {
             try
             {
@@ -97,5 +97,6 @@ namespace TruNguyen.Application.Services
                 return false;
             }
         }
+
     }
 }

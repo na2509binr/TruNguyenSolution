@@ -14,7 +14,7 @@ namespace TruNguyen.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(News))]
+        //[ForeignKey(nameof(News))]
         public int NewsId { get; set; }
         public New News { get; set; }
 

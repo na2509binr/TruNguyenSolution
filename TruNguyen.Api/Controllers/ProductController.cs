@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using TruNguyen.Application.Interfaces;
+using TruNguyen.Domain.Entities;
 
 namespace TruNguyen.Api.Controllers
 {
@@ -21,13 +22,65 @@ namespace TruNguyen.Api.Controllers
         {
             try
             {
-                return Ok("success!");
+                var list = await _product.GetAll();
+                return Ok(list);
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
                 _logger.LogError("Lỗi:  " + ex.ToString());
-                return Unauthorized(new { message = "Invalid credentials" });
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpPost("insert")]
+        public async Task<IActionResult> Insert([FromBody] Product product)
+        {
+            try
+            {
+                var success = await _product.Insert(product);
+                if (!success) return StatusCode(500, "Internal Server Error");
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] Product product)
+        {
+            try
+            {
+                var success = await _product.Update(product);
+                if (!success) return StatusCode(500, "Internal Server Error");
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        [HttpPost("delete")]
+        public async Task<IActionResult> Delete([FromBody] Product product)
+        {
+            try
+            {
+                var success = await _product.Delete(product);
+                if (!success) return StatusCode(500, "Internal Server Error");
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

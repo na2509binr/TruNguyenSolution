@@ -9,11 +9,11 @@ namespace TruNguyen.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<List<User>> GetAllUser(User user);
-        Task<User> GetUserById(int id);
-        Task<bool> InsertUser(User user);
-        Task<bool> UpdateUser(User user);
-        Task<bool> DeleteUser(User user);
+        Task<List<User>> GetAll();
+        Task<User> GetById(Guid id);
+        Task<bool> Insert(User user);
+        Task<bool> Update(User user);
+        Task<bool> Delete(User user);
 
     }
 }

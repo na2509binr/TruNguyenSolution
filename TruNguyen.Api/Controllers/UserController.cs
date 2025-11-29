@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using TruNguyen.Application.Interfaces;
+using TruNguyen.Domain.Entities;
 
 namespace TruNguyen.Api.Controllers
 {
@@ -17,60 +18,76 @@ namespace TruNguyen.Api.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IActionResult> GetAll([FromBody] LoginRequest dto)
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return Ok("success!");
+                var list = await _user.GetAll();
+                return Ok(list);
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
                 _logger.LogError("Lỗi:  " + ex.ToString());
-                return Unauthorized(new { message = "Invalid credentials" });
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
         [HttpPost("insert")]
-        public async Task<IActionResult> InsertUser()
+        public async Task<IActionResult> Insert([FromBody] User user)
         {
             try
             {
-                return Ok("success!");
+                var bl = await _user.Insert(user);
+                if (!bl) return StatusCode(500, "Internal Server Error");
+
+                return Ok("Xảy ra lỗi trong quá trình Thêm mới!");
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
                 _logger.LogError("Lỗi:  " + ex.ToString());
-                return Unauthorized(new { message = "Invalid credentials" });
+                return StatusCode(500, "Internal Server Error");
             }
         }
-        [HttpPost("update")]
-        public async Task<IActionResult> UpdateUser()
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] User user)
         {
             try
             {
-                return Ok("success!");
+                var bl = await _user.Update(user);
+                if (!bl) return StatusCode(500, "Internal Server Error");
+
+                return Ok("Xảy ra lỗi trong quá trình Cập nhật!");
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
                 _logger.LogError("Lỗi:  " + ex.ToString());
-                return Unauthorized(new { message = "Invalid credentials" });
+                return StatusCode(500, "Internal Server Error");
             }
         }
-        [HttpPost("delete")]
-        public async Task<IActionResult> DeleteUser()
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                return Ok("success!");
+                var user = await _user.GetById(id);
+                if (user == null ) return StatusCode(500, "Internal Server Error");
+
+
+                var bl = await _user.Delete(user);
+                if (!bl) return StatusCode(500, "Internal Server Error");
+
+                return Ok("Xảy ra lỗi trong quá trình Xóa!");
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
                 _logger.LogError("Lỗi:  " + ex.ToString());
-                return Unauthorized(new { message = "Invalid credentials" });
+                return StatusCode(500, "Internal Server Error");
             }
         }
 

@@ -21,9 +21,9 @@ namespace TruNguyen.Domain.Entities
         public string Content { get; set; } = string.Empty;
         public bool IsActive;
 
-        [ForeignKey(nameof(CategoryProductId))]
+        //[ForeignKey(nameof(CategoryProductId))]
         public int CategoryProductId { get; set; }
-        public CategoryProduct CategoryProducts { get; set; }
+        //public CategoryProduct CategoryProducts { get; set; }
     }
 
 }
