@@ -16,7 +16,7 @@ namespace TruNguyen.Domain.Entities
 
         //[ForeignKey(nameof(News))]
         public int NewsId { get; set; }
-        public New News { get; set; }
+        //public New News { get; set; }
 
         public string Title { get; set; }           // Tiêu đề của phần (ví dụ: “Giới thiệu”)
         public string Content { get; set; }         // Nội dung chi tiết
