@@ -51,7 +51,7 @@ namespace TruNguyen.Api.Controllers
             }
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] CategoryProduct entity)
         {
             try
@@ -68,11 +68,14 @@ namespace TruNguyen.Api.Controllers
             }
         }
 
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] CategoryProduct entity)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
+                var entity = await _categoryProduct.GetById(id);
+                if (entity == null) return StatusCode(500, "Internal Server Error");
+
                 var success = await _categoryProduct.Delete(entity);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(entity);

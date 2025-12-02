@@ -50,7 +50,7 @@ namespace TruNguyen.Api.Controllers
             }
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] New entity)
         {
             try
@@ -67,7 +67,7 @@ namespace TruNguyen.Api.Controllers
             }
         }
 
-        [HttpPost("delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] New entity)
         {
             try

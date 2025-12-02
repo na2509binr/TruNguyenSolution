@@ -38,6 +38,7 @@ namespace TruNguyen.Api.Controllers
         {
             try
             {
+                product.CreateDate = DateTime.Now;
                 var success = await _product.Insert(product);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(product);
@@ -55,6 +56,7 @@ namespace TruNguyen.Api.Controllers
         {
             try
             {
+
                 var success = await _product.Update(product);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(product);
@@ -68,10 +70,13 @@ namespace TruNguyen.Api.Controllers
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromBody] Product product)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
+                var product = await _product.GetById(id);
+                if (product == null) return StatusCode(500, "Internal Server Error");
+
                 var success = await _product.Delete(product);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(product);
