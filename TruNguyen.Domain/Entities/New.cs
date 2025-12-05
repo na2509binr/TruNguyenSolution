@@ -24,6 +24,7 @@ namespace TruNguyen.Domain.Entities
         public string Author { get; set; }
         public bool Active { get; set; }
         public int Order { get; set; }
+        public int CategoryNewId { get; set; }
         public DateTime CreatedAt { get; set; }
 
 

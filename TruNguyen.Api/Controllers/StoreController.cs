@@ -6,14 +6,15 @@ using TruNguyen.Domain.Entities;
 namespace TruNguyen.Api.Controllers
 {
     [ApiController]
-    [Route("api/new")]
-    public class NewController : Controller
+    [Route("api/store")]
+    public class StoreController : Controller
     {
-        private readonly INewService _new;
-        private readonly ILogger<NewController> _logger;
-        public NewController(INewService _new_, ILogger<NewController> logger)
+        private readonly IStoreService _store;
+        private readonly ILogger<StoreController> _logger;
+
+        public StoreController(IStoreService store, ILogger<StoreController> logger)
         {
-            _new = _new_;
+            _store = store;
             _logger = logger;
         }
 
@@ -22,7 +23,7 @@ namespace TruNguyen.Api.Controllers
         {
             try
             {
-                var list = await _new.GetAll();
+                var list = await _store.GetAll();
                 return Ok(list);
             }
             catch (Exception ex)
@@ -38,8 +39,9 @@ namespace TruNguyen.Api.Controllers
         {
             try
             {
-                var news = await _new.GetById(id);
-                return Ok(news);
+                var item = await _store.GetById(id);
+                if (item == null) return NotFound();
+                return Ok(item);
             }
             catch (Exception ex)
             {
@@ -50,11 +52,11 @@ namespace TruNguyen.Api.Controllers
         }
 
         [HttpPost("insert")]
-        public async Task<IActionResult> Insert([FromBody] New entity)
+        public async Task<IActionResult> Insert([FromBody] Store entity)
         {
             try
             {
-                var success = await _new.Insert(entity);
+                var success = await _store.Insert(entity);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(entity);
             }
@@ -67,11 +69,11 @@ namespace TruNguyen.Api.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] New entity)
+        public async Task<IActionResult> Update([FromBody] Store entity)
         {
             try
             {
-                var success = await _new.Update(entity);
+                var success = await _store.Update(entity);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(entity);
             }
@@ -84,11 +86,15 @@ namespace TruNguyen.Api.Controllers
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromBody] New entity)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var success = await _new.Delete(entity);
+                var entity = await _store.GetById(id);
+                if (entity == null) return StatusCode(500, "Internal Server Error");
+
+
+                var success = await _store.Delete(entity);
                 if (!success) return StatusCode(500, "Internal Server Error");
                 return Ok(entity);
             }

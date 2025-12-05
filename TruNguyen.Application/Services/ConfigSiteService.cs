@@ -35,6 +35,20 @@ namespace TruNguyen.Application.Services
             }
         }
 
+        public async Task<ConfigSite> GetIndex()
+        {
+            try
+            {
+                return await _configSiteRepo.GetIndex();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return null!;
+            }
+        }
+
         public async Task<ConfigSite> GetById(int id)
         {
             try
@@ -93,5 +107,7 @@ namespace TruNguyen.Application.Services
                 return false;
             }
         }
+
+
     }
 }

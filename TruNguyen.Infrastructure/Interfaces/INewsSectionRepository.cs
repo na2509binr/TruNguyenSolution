@@ -9,5 +9,6 @@ namespace TruNguyen.Infrastructure.Interfaces
 {
     public interface INewsSectionRepository : IGenericRepository<NewsSection, int>
     {
+        Task<List<NewsSection>> GetByNewIdAsync(int newsId);
     }
 }

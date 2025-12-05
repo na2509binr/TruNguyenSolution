@@ -29,6 +29,9 @@ namespace TruNguyen.Infrastructure
             services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ISeoMetaRepository, SeoMetaRepository>();
+            services.AddScoped<IStoreRepository, StoreRepository>();
+            services.AddScoped<ICategoryNewRepository, CategoryNewRepository>();
+            services.AddScoped<IBannerRepository, BannerRepository>();
             return services;
         }
     }

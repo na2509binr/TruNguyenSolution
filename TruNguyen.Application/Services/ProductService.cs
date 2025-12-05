@@ -28,7 +28,37 @@ namespace TruNguyen.Application.Services
         {
             try
             {
-                var items = (await _productRepo.GetAllAsync()).ToList();
+                //var items = (await _productRepo.GetAllAsync()).ToList();
+
+                var list = (await _productRepo.GetAllAsync()).ToList();
+
+                foreach (var item in list)
+                {
+                    item.Url = ToSlug(item.Name);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return null!;
+            }
+        }
+
+        public async Task<List<Product>> GetFiltByCateId(int cateId)
+        {
+            try
+            {
+                var items = new List<Product>();
+                if (cateId == -1)
+                    items = (await _productRepo.GetAllAsync()).ToList();
+                else
+                    items = (await _productRepo.GetFiltByCateId(cateId)).ToList();
+
+
+
                 return items;
             }
             catch (Exception ex)
@@ -99,6 +129,41 @@ namespace TruNguyen.Application.Services
                 _logger.LogError("Lỗi:  " + ex.ToString());
                 return false;
             }
+        }
+
+        public static string ToSlug(string phrase)
+        {
+            if (string.IsNullOrWhiteSpace(phrase)) return "";
+
+            // Thay đ/Đ trước
+            string str = phrase.Replace("Đ", "D").Replace("đ", "d");
+
+            // Chuẩn hoá Unicode về dạng tách dấu
+            str = str.Normalize(NormalizationForm.FormD);
+
+            // Loại bỏ dấu
+            var sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(c);
+                }
+            }
+            str = sb.ToString();
+
+            // Lowercase
+            str = str.ToLowerInvariant();
+
+            // Loại ký tự không hợp lệ
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+
+            // Trim, đổi khoảng trắng thành -, gom nhiều - thành 1
+            str = Regex.Replace(str, @"\s+", "-").Trim();
+            str = Regex.Replace(str, @"-+", "-");
+
+            return str;
         }
     }
 

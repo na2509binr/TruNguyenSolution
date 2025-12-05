@@ -33,6 +33,22 @@ namespace TruNguyen.Api.Controllers
             }
         }
 
+        [HttpGet("get-filt-by-cate-id")]
+        public async Task<IActionResult> GetFiltByCateId(int cateId)
+        {
+            try
+            {
+                var list = await _product.GetFiltByCateId(cateId);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpPost("insert")]
         public async Task<IActionResult> Insert([FromBody] Product product)
         {

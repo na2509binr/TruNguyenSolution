@@ -7,6 +7,7 @@ namespace TruNguyen.Application.Interfaces
     public interface IConfigSiteService
     {
         Task<List<ConfigSite>> GetAll();
+        Task<ConfigSite> GetIndex();
         Task<ConfigSite> GetById(int id);
         Task<bool> Insert(ConfigSite entity);
         Task<bool> Update(ConfigSite entity);

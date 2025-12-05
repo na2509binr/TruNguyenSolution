@@ -30,31 +30,104 @@ namespace TruNguyen.Application.Services
 
                 return menus;
 
-
-                //var menus = (await _menuRepo.GetAllAsync()).ToList();
                 //var treeMenus = _menuRepo.BuildTree(
                 //    menus,
-                //    null, 
-                //    m => m.ParentId, 
-                //    m => m.Id, 
-                //    (m, children) => m.Children = children
-                //);
-
-                //return treeMenus;
-
-                //return _menuRepo.BuildTree(
-                //    (await _menuRepo.GetAllAsync()).ToList(),
                 //    null,
                 //    m => m.ParentId,
                 //    m => m.Id,
                 //    (m, children) => m.Children = children
                 //);
+
+                //return treeMenus;
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
                 _logger.LogError("Lỗi:  " + ex.ToString());
                 return null!;
+            }
+        }
+
+        public async Task<List<Menu>> GetTree()
+        {
+            try
+            {
+                var menus = (await _menuRepo.GetAllAsync()).ToList();
+
+                var treeMenus = _menuRepo.BuildTree(
+                    menus,
+                    null,
+                    m => m.ParentId,
+                    m => m.Id,
+                    (m, children) => m.Children = children
+                );
+
+                return treeMenus;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return null!;
+            }
+        }
+
+        public async Task<Menu> GetById(int id)
+        {
+            try
+            {
+                return await _menuRepo.GetByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return null!;
+            }
+        }
+
+        public async Task<bool> Insert(Menu menu)
+        {
+            try
+            {
+                await _menuRepo.AddAsync(menu);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return false;
+            }
+        }
+
+        public async Task<bool> Update(Menu menu)
+        {
+            try
+            {
+                await _menuRepo.UpdateAsync(menu);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return false;
+            }
+        }
+
+        public async Task<bool> Delete(Menu menu)
+        {
+            try
+            {
+                await _menuRepo.DeleteAsync(menu);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return false;
             }
         }
     }

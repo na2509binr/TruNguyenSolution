@@ -19,9 +19,9 @@ namespace TruNguyen.Domain.Entities
         public bool IsActive { get; set; }
 
         // Quan hệ đệ quy
-        //[JsonIgnore]
-        //public Menu? Parent { get; set; }
-        //public ICollection<Menu>? Children { get; set; }
+        [JsonIgnore]
+        public Menu? Parent { get; set; }
+        public ICollection<Menu>? Children { get; set; }
 
         // Nếu menu này trỏ đến một category nào đó
         public int? CategoryNewsId { get; set; }

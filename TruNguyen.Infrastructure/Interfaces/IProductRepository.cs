@@ -9,6 +9,6 @@ namespace TruNguyen.Infrastructure.Interfaces
 {
     public interface IProductRepository : IGenericRepository<Product, int>
     {
-
+        Task<List<Product>> GetFiltByCateId(int cateId);
     }
 }

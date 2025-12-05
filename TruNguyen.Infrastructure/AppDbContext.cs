@@ -11,12 +11,15 @@ namespace TruNguyen.Infrastructure
 
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Menu> Menus { get; set; } = null!;
+        public DbSet<Banner> Banners { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<CategoryProduct> CategoryProducts { get; set; } = null!;
+        public DbSet<CategoryNew> CategoryNews { get; set; } = null!;
         public DbSet<New> News { get; set; } = null!;
         public DbSet<NewsSection> NewsSections { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<Partner> Partners { get; set; } = null!;
+        public DbSet<Store> Stores { get; set; } = null!;
         public DbSet<SeoMeta> SeoMetas { get; set; } = null!;
         public DbSet<ConfigSite> ConfigSites { get; set; } = null!;
         public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;

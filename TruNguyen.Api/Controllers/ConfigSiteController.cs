@@ -33,6 +33,22 @@ namespace TruNguyen.Api.Controllers
             }
         }
 
+        [HttpGet("get-index")]
+        public async Task<IActionResult> GetIndex()
+        {
+            try
+            {
+                var list = await _configSite.GetIndex();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"[{MethodBase.GetCurrentMethod().Name}]");
+                _logger.LogError("Lỗi:  " + ex.ToString());
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
         [HttpPost("insert")]
         public async Task<IActionResult> Insert([FromBody] ConfigSite entity)
         {

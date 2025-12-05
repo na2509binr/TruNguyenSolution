@@ -27,6 +27,9 @@ namespace TruNguyen.Application
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISeoMetaService, SeoMetaService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStoreService, StoreService>();
+            services.AddScoped<ICategoryNewService, CategoryNewService>();
+            services.AddScoped<IBannerService, BannerService>();
             // 🔹 Đăng ký các service tầng Application tại đây
             // Ví dụ:
             // services.AddScoped<IReportService, ReportService>();
